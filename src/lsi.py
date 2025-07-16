@@ -1,12 +1,12 @@
 import numpy as np
-from typing import List, Tuple
+from typing import List
 from sklearn.metrics.pairwise import cosine_similarity
 
-from dataprocessor import DataHandler
-from sys_config import SystemConfiguration
-from term_document_matrix import TermDocumentMatrix
-from queryprocessor import QueryProcessor
-from lsi_core import LSICore
+from src.data_processor import DataHandler
+from src.sys_config import SystemConfiguration
+from src.term_document_matrix import TermDocumentMatrix
+from src.query_processor import QueryProcessor
+from src.lsi_core import LSICore
 
 class LSI:
     """
@@ -23,25 +23,18 @@ class LSI:
         building the term-document matrix, and computing LSI decomposition.
         This includes initializing the LSI core and preparing the IDF weights for query processing.
         """
-        print("Setting up LSI-IR System...")
         print(f"Configuration: {self.config.n_components} components, {self.config.metric} metric")
 
-        print("1. Parsing documents...")
         self.parsed_df = DataHandler.parse_to_dataframe(self.data_path)
-        print(f"   Loaded {len(self.parsed_df)} documents")
-        
-        print("2. Preprocessing documents...")
+    
         self.preprocessed_df = DataHandler.preprocess_for_lsi(
             self.parsed_df, **self.config.preprocessing_config
         )
 
-        print("3. Building term-document matrix...")
         self.term_document_matrix, self.term_indexes = TermDocumentMatrix.build_matrix(
             self.preprocessed_df, self.config.metric
         )
-        print(f"   Matrix shape: {self.term_document_matrix.shape}")
 
-        print("4. Computing LSI decomposition...")
         self.document_indexes = np.array(self.parsed_df["T"])
         self.lsi = LSICore(
             self.term_document_matrix, 
@@ -54,9 +47,6 @@ class LSI:
         n_docs = self.term_document_matrix.shape[1]
         self.idf_weights = np.log10(n_docs / (doc_freq + 1))
         
-        print("5. System ready!")
-        print(f"   Vocabulary size: {len(self.term_indexes)}")
-        print(f"   LSI dimensions: {self.config.n_components}")
     
     def retrieve(self, query: str, n_docs: int = 10) -> List[int]:
         """

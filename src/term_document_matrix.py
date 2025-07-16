@@ -28,7 +28,7 @@ class TermDocumentMatrix:
         return list(set(vocab)), term_frequencies
     
     @staticmethod
-    def build_matrix(df: pd.DataFrame, metric: str = "freq") -> Tuple[np.ndarray, np.ndarray]:
+    def build_matrix(df: pd.DataFrame, metric: str) -> Tuple[np.ndarray, np.ndarray]:
         """
         Build term-document matrix from DataFrame
         Args:

@@ -6,7 +6,6 @@ class QueryProcessor:
     """
     This class handles query preprocessing and vector creation
     """
-    
     @staticmethod
     def preprocess_query(query: str, **kwargs) -> str:
         """
@@ -59,7 +58,15 @@ class QueryProcessor:
     
     @staticmethod
     def create_query_vector(preprocessed_query: str, term_indexes: np.ndarray, metric: str = "freq") -> np.ndarray:
-        """Create term vector for query"""
+        """
+        Create term vector for query
+        Args:
+            preprocessed_query (str): Preprocessed query string
+            term_indexes (np.ndarray): Vocabulary indexes
+            metric (str): Metric for the vector ('bool', 'freq')
+        Returns:
+            np.ndarray: Query vector
+        """
         query_vector = np.zeros(len(term_indexes))
         
         for term in preprocessed_query.split():
