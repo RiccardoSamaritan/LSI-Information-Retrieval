@@ -4,6 +4,7 @@ A study and implementation project of Singular Value Decomposition (SVD) and Lat
 This project was realized by:
   - [Giovanni Oro](https://github.com/GiovanniOro666)
   - [Riccardo Samaritan](https://github.com/RiccardoSamaritan)
+
 for the Information Retrieval exam at University Of Trieste
 
 ## Project Overview
